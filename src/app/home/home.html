@@ -1,1 +1,22 @@
-<p>home works!</p>
+<h1>Webbutveckling - Ramschema</h1>
+<input type="text" id="search" placeholder="Sök efter kurskod eller kursnamn">
+
+<table>
+    <thead>
+        <tr>
+            <th>Kurskod</th>
+            <th>Kursnamn</th>
+            <th>Progression</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (course of courses(); track course.code) {
+        <tr>
+            <td>{{ course.code }}</td>
+            <td>{{ course.coursename }}</td>
+            <td>{{ course.progression }}</td>
+        </tr>
+        }
+    </tbody>
+</table>
