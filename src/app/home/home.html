@@ -1,5 +1,9 @@
 <h1>Webbutveckling - Ramschema</h1>
-<input type="text" id="search" placeholder="Sök efter kurskod eller kursnamn">
+<input type="text" id="search" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off">
+
+@if (error()) {
+    <p>{{ error() }}</p>
+}
 
 <table>
     <thead>
@@ -13,7 +17,7 @@
     <tbody>
         @for (course of courses(); track course.code) {
         <tr>
-            <td>{{ course.code }}</td>
+            <td>{{ course.code | uppercase }}</td>
             <td>{{ course.coursename }}</td>
             <td>{{ course.progression }}</td>
         </tr>
