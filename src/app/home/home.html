@@ -1,8 +1,12 @@
 <h1>Webbutveckling - Ramschema</h1>
-<input type="text" id="search" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off">
+
+<label for="filter">
+    <input type="text" id="filter" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off"
+        [value]="filterCourses()" (input)="filterCourses.set($any($event.target).value)">
+</label>
 
 @if (error()) {
-    <p>{{ error() }}</p>
+<p>{{ error() }}</p>
 }
 
 <table>
@@ -15,7 +19,7 @@
     </thead>
 
     <tbody>
-        @for (course of courses(); track course.code) {
+        @for (course of filteredCourses(); track course.code) {
         <tr>
             <td>{{ course.code | uppercase }}</td>
             <td>{{ course.coursename }}</td>

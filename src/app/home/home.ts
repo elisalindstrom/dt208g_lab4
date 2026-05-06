@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CourseService } from '../services/course-service';
 import { Course } from '../interfaces/course'; // Import av interface
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,18 @@ import { CommonModule } from '@angular/common';
 export class Home {
   courses = signal<Course[]>([]);
   error = signal<string | null>(null);
+  filterCourses = signal("");
+
+  filteredCourses = computed(() => {
+    const filter = this.filterCourses().trim().toLowerCase();
+    if (!filter) return this.courses();
+
+    return this.courses().filter(c =>
+      c.code.toLowerCase().includes(filter) ||
+      c.coursename.toLowerCase().includes(filter)
+    );
+  })
+
   courseService = inject(CourseService);
 
   /* constructor(private courseService: CourseService) {
@@ -20,7 +32,8 @@ export class Home {
     });
   } */
 
-  ngOnInit() {
+  // Anrop
+  ngOnInit(): void {
     this.loadCourses();
   }
 
