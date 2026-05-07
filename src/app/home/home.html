@@ -1,8 +1,8 @@
 <h1>Webbutveckling - Ramschema</h1>
 
 <label for="filter">
-    <input type="text" id="filter" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off"
-        [value]="filterCourses()" (input)="filterCourses.set($any($event.target).value)">
+    <input type="text" id="filter" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off" #filterInput
+        [value]="filterCourses()" (input)="onCoursesFiltered((filterInput.value))">
 </label>
 
 @if (error()) {
@@ -12,9 +12,9 @@
 <table>
     <thead>
         <tr>
-            <th class="click" (click)="sortCourses.set('code')">Kurskod</th>
-            <th class="click" (click)="sortCourses.set('coursename')">Kursnamn</th>
-            <th class="click" (click)="sortCourses.set('progression')">Progression</th>
+            <th class="click" (click)="onCoursesSorted('code')">Kurskod</th>
+            <th class="click" (click)="onCoursesSorted('coursename')">Kursnamn</th>
+            <th class="click" (click)="onCoursesSorted('progression')">Progression</th>
         </tr>
     </thead>
 
