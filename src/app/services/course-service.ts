@@ -11,7 +11,7 @@ export class CourseService {
 
   http = inject(HttpClient);
   
-  // Hämta kurser
+  // Hämtar kurser från webbtjänst - returnerar en promise
   async getCourses(): Promise<Course[]> {
     const courses = this.http.get<Course[]>(this.url);
     return await firstValueFrom(courses);

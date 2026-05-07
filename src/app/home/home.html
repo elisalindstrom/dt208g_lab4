@@ -12,14 +12,14 @@
 <table>
     <thead>
         <tr>
-            <th>Kurskod</th>
-            <th>Kursnamn</th>
-            <th>Progression</th>
+            <th class="click" (click)="sortCourses.set('code')">Kurskod</th>
+            <th class="click" (click)="sortCourses.set('coursename')">Kursnamn</th>
+            <th class="click" (click)="sortCourses.set('progression')">Progression</th>
         </tr>
     </thead>
 
     <tbody>
-        @for (course of filteredCourses(); track course.code) {
+        @for (course of sortedCourses(); track course.code) {
         <tr>
             <td>{{ course.code | uppercase }}</td>
             <td>{{ course.coursename }}</td>

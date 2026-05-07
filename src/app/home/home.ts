@@ -9,13 +9,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
+
 export class Home {
   courses = signal<Course[]>([]);
   error = signal<string | null>(null);
   filterCourses = signal("");
+  sortCourses = signal("");
 
+  // Inject av service: course-service
+  courseService = inject(CourseService);
+
+  // Filtrering
   filteredCourses = computed(() => {
     const filter = this.filterCourses().trim().toLowerCase();
+
     if (!filter) return this.courses();
 
     return this.courses().filter(c =>
@@ -24,26 +31,40 @@ export class Home {
     );
   })
 
-  courseService = inject(CourseService);
+  // Sortering
+  sortedCourses = computed(() => {
+    const sort = this.sortCourses();
 
-  /* constructor(private courseService: CourseService) {
-    this.courses = toSignal(this.courseService.getCourses(), {
-      initialValue: []
-    });
-  } */
+    if (sort === 'code') {
+      return [...this.filteredCourses()].sort((a, b) =>
+        a.code.localeCompare(b.code))
+    }
 
-  // Anrop
+    if (sort === 'coursename') {
+      return [...this.filteredCourses()].sort((a, b) =>
+        a.coursename.localeCompare(b.coursename))
+    }
+
+    if (sort === 'progression') {
+      return [...this.filteredCourses()].sort((a, b) =>
+        a.progression.localeCompare(b.progression))
+    }
+
+    return this.filteredCourses();
+  })
+
+  // Körs vid start
   ngOnInit(): void {
     this.loadCourses();
   }
 
+  // Ser till att service anropas och data hämtas
   async loadCourses() {
     try {
+      // 
       const response = await this.courseService.getCourses();
       this.courses.set(response);
-      // console.table(this.courses());
     } catch (err) {
-      // console.error(err);
       this.error.set("Kunde inte ladda någon data");
     }
   }
