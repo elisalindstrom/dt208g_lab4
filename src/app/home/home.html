@@ -1,30 +1,32 @@
 <h1>Webbutveckling - Ramschema</h1>
 
-<label for="filter">
-    <input type="text" id="filter" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off" #filterInput
-        [value]="filterCourses()" (input)="onCoursesFiltered((filterInput.value))">
-</label>
+<div class="table-container">
+    <label for="filter">
+        <input type="text" id="filter" placeholder="Sök efter kurskod eller kursnamn" autocomplete="off" #filterInput
+            [value]="filterCourses()" (input)="onCoursesFiltered((filterInput.value))">
+    </label>
 
-@if (error()) {
-<p>{{ error() }}</p>
-}
+    @if (error()) {
+    <p>{{ error() }}</p>
+    }
 
-<table>
-    <thead>
-        <tr>
-            <th class="click" (click)="onCoursesSorted('code')">Kurskod</th>
-            <th class="click" (click)="onCoursesSorted('coursename')">Kursnamn</th>
-            <th class="click" (click)="onCoursesSorted('progression')">Progression</th>
-        </tr>
-    </thead>
+    <table>
+        <thead>
+            <tr>
+                <th class="click coursecode" (click)="onCoursesSorted('code')">Kurskod</th>
+                <th class="click coursename" (click)="onCoursesSorted('coursename')">Kursnamn</th>
+                <th class="click progression" (click)="onCoursesSorted('progression')">Progression</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        @for (course of sortedCourses(); track course.code) {
-        <tr>
-            <td>{{ course.code | uppercase }}</td>
-            <td>{{ course.coursename }}</td>
-            <td>{{ course.progression }}</td>
-        </tr>
-        }
-    </tbody>
-</table>
+        <tbody>
+            @for (course of sortedCourses(); track course.code) {
+            <tr>
+                <td>{{ course.code | uppercase }}</td>
+                <td>{{ course.coursename }}</td>
+                <td>{{ course.progression }}</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
